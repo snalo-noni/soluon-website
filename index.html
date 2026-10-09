@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soluon | Infrastructure for Resilient Living</title>
+<meta name="description" content="Soluon builds resilient, sovereign infrastructure for energy and water, from one home to one community. Local-first, offline-capable, no smartphone required.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%235b6f82'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23f0b64a' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23f0b64a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#5b6f82; --slate-d:#3f5163; --slate-dd:#2b3a49; --mist:#e8eef4; --mist-2:#f3f6f9;
+  --ink:#27323d; --muted:#6c7a88; --sun:#e8a63a; --line:#d5dde5; --white:#fff;
+  --radius:4px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);background:var(--mist);line-height:1.65;font-size:15px;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.page{max-width:1280px;margin:28px auto;background:#fff;border-top-left-radius:64px;overflow:clip;box-shadow:0 30px 80px -40px rgba(43,58,73,.35)}
+.wrap{padding:0 clamp(20px,5vw,72px)}
+section{padding:clamp(56px,8vw,104px) 0}
+h1,h2,h3,h4{line-height:1.25;font-weight:600;letter-spacing:-.01em}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);font-weight:500}
+.sec-title{display:flex;align-items:center;gap:28px;margin-bottom:clamp(32px,5vw,56px)}
+.sec-title::before{content:"";flex:0 0 clamp(48px,9vw,110px);height:2px;background:var(--slate)}
+.sec-title h2{font-size:clamp(24px,3.2vw,36px);max-width:640px}
+.lead{font-size:16px;color:var(--muted);max-width:560px}
+.btn{display:inline-flex;align-items:center;gap:12px;border:1.5px solid var(--slate-d);padding:12px 22px;font-size:13px;font-weight:500;color:var(--slate-d);transition:.25s;background:transparent;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--slate-d);color:#fff}
+.btn.solid{background:var(--slate);border-color:var(--slate);color:#fff}
+.btn.solid:hover{background:var(--slate-dd)}
+.btn svg{width:18px;height:10px}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+/* nav */
+header{display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,5vw,72px);position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);transition:box-shadow .25s}
+header.stuck{box-shadow:0 8px 24px -16px rgba(43,58,73,.45)}
+.logo{font-weight:600;font-size:18px;letter-spacing:.18em;display:flex;align-items:center;gap:10px;color:var(--slate-d)}
+.logo i{width:22px;height:22px;border:2.5px solid var(--sun);border-radius:50%;position:relative;display:inline-block}
+.logo i::after{content:"";position:absolute;inset:5px;background:var(--sun);border-radius:50%}
+nav ul{display:flex;gap:clamp(18px,3.4vw,46px);list-style:none;font-size:13px}
+nav a{padding:6px 0;border-bottom:2px solid transparent;transition:.2s}
+nav a:hover{border-color:var(--sun)}
+.nav-cta{font-size:13px;padding:9px 18px}
+.menu-btn{display:none;background:none;border:0;cursor:pointer;width:32px;height:32px;color:var(--slate-d)}
+@media(max-width:900px){
+  nav{position:absolute;top:100%;left:20px;right:20px;background:#fff;box-shadow:0 20px 40px -20px rgba(0,0,0,.3);padding:18px 24px;display:none;border-top:3px solid var(--slate)}
+  nav.open{display:block}
+  nav ul{flex-direction:column;gap:10px}
+  .menu-btn{display:block}.nav-cta{display:none}
+}
+
+/* hero */
+.hero{padding:10px 0 0;position:relative}
+.hero-grid{position:relative;margin:0 clamp(20px,5vw,72px);padding-left:clamp(0px,7vw,110px);padding-bottom:50px}
+.hero-img{aspect-ratio:1.55/1;margin-left:clamp(0px,9vw,150px);overflow:hidden;position:relative}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.hero-card{position:absolute;left:0;top:clamp(60px,10vw,120px);background:var(--slate);color:#fff;padding:clamp(26px,3.4vw,46px);width:min(430px,70%);z-index:2}
+.hero-card h1{font-size:clamp(28px,4vw,44px);font-weight:600}
+.hero-card p{font-size:13.5px;margin-top:18px;color:#dbe4ec;font-weight:300;line-height:1.7}
+.hero-card .tag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sun);margin-bottom:14px;display:block;font-weight:500}
+.hero-frame{position:absolute;left:clamp(0px,6vw,90px);bottom:6px;width:80px;height:88px;border:2px solid var(--slate);border-top:0;border-right:0;opacity:.6}
+.hero-down{position:absolute;right:0;bottom:0;width:clamp(70px,9vw,110px);height:clamp(62px,7vw,80px);background:var(--slate);display:grid;place-items:center;color:#fff;transition:.25s}
+.hero-down:hover{background:var(--slate-dd)}
+.hero-down svg{width:22px;height:22px}
+.hero-count{position:absolute;right:-6px;top:38%;font-size:11px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;writing-mode:horizontal-tb}
+.hero-count b{display:block;width:1px;height:42px;background:var(--slate)}
+@media(max-width:760px){
+  .hero-grid{padding-left:0}.hero-img{margin-left:0;aspect-ratio:1.1/1}
+  .hero-card{position:relative;top:auto;width:calc(100% - 28px);margin:-70px 0 0 0}
+  .hero-count,.hero-frame{display:none}.hero-down{position:relative;margin:-1px 0 0 auto;display:grid}
+}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,56px)}
+.about-item{display:grid;gap:12px;align-content:start}
+.ico{width:42px;height:42px;color:var(--slate)}
+.about-item h3{font-size:18px;font-weight:600}
+.about-item p{font-size:13.5px;color:var(--muted)}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+.about-feature{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:center;margin-top:clamp(56px,8vw,96px)}
+.about-feature figure{aspect-ratio:4/5;overflow:hidden}
+.about-feature img{width:100%;height:100%;object-fit:cover}
+.about-feature h3{font-size:clamp(22px,2.6vw,30px);margin-bottom:16px}
+.about-feature p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.stats{display:flex;gap:clamp(22px,4vw,52px);margin:30px 0}
+.stat b{display:block;font-size:clamp(30px,4vw,44px);color:var(--slate);font-weight:500;line-height:1.1}
+.stat span{font-size:11px;color:var(--muted);letter-spacing:.08em}
+@media(max-width:800px){.about-feature{grid-template-columns:1fr}}
+
+/* mission */
+.mission{background:var(--slate);color:#fff;padding:clamp(60px,9vw,120px) 0;position:relative;overflow:hidden}
+.mission::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border:2px solid rgba(255,255,255,.12);border-radius:50%}
+.mission::before{content:"";position:absolute;right:-30px;top:-30px;width:240px;height:240px;border:2px solid rgba(240,182,74,.35);border-radius:50%}
+.mission .eyebrow{color:var(--sun)}
+.mission blockquote{font-size:clamp(24px,3.6vw,42px);font-weight:500;line-height:1.3;max-width:900px;margin:20px 0 28px;position:relative;z-index:1}
+.mission p{max-width:640px;color:#d3dde7;font-weight:300;position:relative;z-index:1}
+
+/* problem */
+.problem-top{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.duo div{position:relative;aspect-ratio:4/5;overflow:hidden}
+.duo img{width:100%;height:100%;object-fit:cover}
+.duo figcaption{position:absolute;left:0;bottom:0;background:var(--slate);color:#fff;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px}
+.problem-top p{color:var(--muted);font-size:14px;margin-bottom:14px}
+.problem-top h3{font-size:clamp(22px,2.6vw,30px);margin-bottom:16px}
+@media(max-width:860px){.problem-top{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)}
+.fact{padding:28px 24px 8px 0}
+.fact+.fact{padding-left:24px;border-left:1px solid var(--line)}
+.fact b{display:block;font-size:clamp(32px,4vw,48px);font-weight:500;color:var(--slate);line-height:1.1}
+.fact p{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.55}
+@media(max-width:900px){.facts{grid-template-columns:1fr 1fr}.fact:nth-child(3){border-left:0;padding-left:0}.fact{border-bottom:1px solid var(--line);padding-bottom:22px}}
+@media(max-width:480px){.facts{grid-template-columns:1fr}.fact+.fact{border-left:0;padding-left:0}}
+.src{font-size:11px;color:var(--muted);margin-top:18px}
+.src a{text-decoration:underline;text-underline-offset:2px}
+.insuff{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:clamp(40px,6vw,64px)}
+.insuff div{background:var(--mist-2);padding:26px;border-top:3px solid var(--slate)}
+.insuff h4{font-size:15px;margin-bottom:8px}.insuff p{font-size:13px;color:var(--muted)}
+@media(max-width:860px){.insuff{grid-template-columns:1fr}}
+.who-affected{margin-top:clamp(40px,6vw,64px);display:grid;grid-template-columns:auto 1fr;gap:20px 40px;align-items:start}
+.who-affected h3{font-size:18px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips span{border:1.5px solid var(--line);padding:6px 16px;font-size:13px;color:var(--slate-d);border-radius:40px}
+@media(max-width:700px){.who-affected{grid-template-columns:1fr}}
+
+/* approach */
+.approach{background:var(--mist-2)}
+.approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,90px);align-items:center}
+.steps{list-style:none;position:relative}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:20px;position:relative;padding-bottom:30px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:"";position:absolute;left:16px;top:38px;bottom:4px;width:1px;background:var(--slate);opacity:.45}
+.steps li:last-child::before{display:none}
+.num{width:34px;height:34px;border-radius:50%;background:var(--slate);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:500}
+.steps h4{font-size:16px;margin-bottom:4px}.steps p{font-size:13px;color:var(--muted)}
+.approach figure{background:#fff;padding:12px;box-shadow:0 20px 50px -30px rgba(43,58,73,.4)}
+.approach h2{font-size:clamp(24px,3.2vw,36px);margin:10px 0 34px}
+@media(max-width:860px){.approach-grid{grid-template-columns:1fr}}
+
+/* build */
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.product{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;transition:.3s}
+.product:hover{transform:translateY(-4px);box-shadow:0 24px 40px -28px rgba(43,58,73,.5)}
+.product img{aspect-ratio:5/4;object-fit:cover;width:100%}
+.product div{padding:24px 24px 28px}
+.product .badge{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);display:inline-flex;gap:8px;align-items:center;margin-bottom:10px;font-weight:500}
+.product .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#6fb58a}
+.product h3{font-size:19px;margin-bottom:8px}.product p{font-size:13px;color:var(--muted)}
+@media(max-width:900px){.products{grid-template-columns:1fr}}
+.app-band{margin-top:30px;background:var(--slate);color:#fff;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center}
+.app-img{width:clamp(140px,16vw,190px);aspect-ratio:3/2;object-fit:cover}
+.app-band .phone{width:64px;height:100px;border:3px solid #cfdae5;border-radius:14px;position:relative;display:grid;place-items:center}
+.app-band .phone::before{content:"";width:22px;height:22px;border:2.5px solid var(--sun);border-radius:50%}
+.app-band h3{font-size:22px;margin-bottom:6px}.app-band p{font-size:13.5px;color:#d3dde7;font-weight:300;max-width:620px}
+.app-band .btn{border-color:#fff;color:#fff}.app-band .btn:hover{background:#fff;color:var(--slate-d)}
+@media(max-width:800px){.app-band{grid-template-columns:1fr}}
+
+/* serve */
+.serve{background:var(--slate-dd);color:#fff}
+.serve .sec-title::before{background:var(--sun)}
+.serve-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.12)}
+.serve-card{background:var(--slate-dd);padding:34px 26px;display:grid;gap:12px;align-content:start;transition:.3s}
+.serve-card:hover{background:#34475a}
+.serve-card .ico{color:var(--sun)}
+.serve-card h3{font-size:18px}.serve-card p{font-size:13px;color:#b9c7d4;font-weight:300}
+.dealer{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:clamp(24px,5vw,64px);align-items:center;margin-top:48px}
+.dealer img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.dealer h3{font-size:clamp(22px,2.6vw,30px);margin:8px 0 14px}
+.dealer p{font-size:14px;color:#b9c7d4;font-weight:300;margin-bottom:12px;max-width:560px}
+.dealer .eyebrow{color:var(--sun)}
+.dealer .btn{border-color:#fff;color:#fff;margin-top:12px}.dealer .btn:hover{background:#fff;color:var(--slate-d)}
+@media(max-width:760px){.dealer{grid-template-columns:1fr}.dealer img{max-width:340px}}
+.serve-photos{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.serve-photos img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.serve-photos figcaption{font-size:12.5px;color:#b9c7d4;font-weight:300;margin-top:10px}
+@media(max-width:700px){.serve-photos{grid-template-columns:1fr}}
+@media(max-width:960px){.serve-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.serve-grid{grid-template-columns:1fr}}
+
+/* principles */
+.princ-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:34px}
+.princ-head .sec-title{margin:0}
+.arrows{display:flex;gap:14px}
+.arrows button{width:42px;height:42px;border:1.5px solid var(--slate);background:none;cursor:pointer;color:var(--slate);display:grid;place-items:center;transition:.2s}
+.arrows button:hover{background:var(--slate);color:#fff}
+.arrows svg{width:18px;height:18px}
+.carousel{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--slate) var(--mist)}
+.pcard{flex:0 0 clamp(260px,30%,340px);scroll-snap-align:start;background:var(--slate);color:#fff;padding:32px 30px 36px;min-height:260px}
+.pcard .q{font-size:46px;line-height:1;font-family:Georgia,serif;color:var(--sun);display:block;height:30px}
+.pcard h3{font-size:18px;margin:12px 0 10px}
+.pcard p{font-size:12.5px;color:#dbe4ec;font-weight:300;line-height:1.7}
+.pcard small{display:block;margin-top:18px;font-size:11px;letter-spacing:.14em;color:#a9bacb}
+
+/* team */
+.team{background:var(--mist-2)}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 28px}
+.member{text-align:center}
+.member img{width:min(180px,100%);aspect-ratio:1;border-radius:50%;object-fit:cover;margin:0 auto 18px;border:4px solid #fff;box-shadow:0 14px 30px -16px rgba(43,58,73,.55)}
+.member h3{font-size:16px}.member .role{font-size:12px;color:var(--slate);letter-spacing:.06em;margin:3px 0 10px;font-weight:500}
+.member p{font-size:12.5px;color:var(--muted);line-height:1.6}
+.member.lead-m{grid-column:span 1}
+@media(max-width:1000px){.team-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.team-grid{grid-template-columns:1fr}}
+
+/* contact */
+.contact{text-align:center}
+.contact h2{font-size:clamp(24px,3.4vw,38px);margin-bottom:12px}
+.contact .lead{margin:0 auto 34px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(24px,5vw,64px);text-align:left;max-width:1000px;margin:0 auto}
+.channels{display:grid;gap:18px;align-content:start}
+.channel{border-left:3px solid var(--slate);padding:4px 0 4px 18px}
+.channel small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.channel a,.channel strong{font-size:15px;font-weight:500;color:var(--slate-d)}
+.channel a:hover{text-decoration:underline}
+form{display:grid;gap:14px;background:var(--mist-2);padding:clamp(22px,3vw,34px)}
+label{font-size:12px;color:var(--muted);display:grid;gap:6px;font-weight:500}
+input,select,textarea{font:inherit;font-size:14px;padding:12px 14px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:0;width:100%}
+textarea{min-height:110px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+.note{font-size:11.5px;color:var(--muted)}
+
+/* footer */
+footer{background:var(--slate);color:#fff;padding:56px 0 30px}
+.foot{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:34px}
+footer .logo{color:#fff;margin-bottom:14px}
+footer p,footer li,footer a{font-size:12.5px;color:#d3dde7;font-weight:300}
+footer h4{font-size:13px;margin-bottom:12px;font-weight:600}
+footer ul{list-style:none;display:grid;gap:8px}
+footer a:hover{color:#fff;text-decoration:underline}
+.copy{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.18);font-size:11.5px;color:#b9c7d4;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:800px){.foot{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.foot{grid-template-columns:1fr}}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="page" id="home">
+
+<header>
+  <a class="logo" href="#home" aria-label="Soluon home"><i></i>SOLUON</a>
+  <nav id="nav" aria-label="Main">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#build">What We Build</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <a class="btn nav-cta" href="#contact">Work with us</a>
+  <button class="menu-btn" id="menu" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h18M7 12h14M3 17h18"/></svg>
+  </button>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="hero-img"><img src="assets/photos/hero.jpg" alt="Three women walking along a rural road past homes and maize fields in warm evening light"></div>
+    <div class="hero-card">
+      <span class="tag">Soluon · Est. 2024 · South Africa</span>
+      <h1>Infrastructure for resilient living.</h1>
+      <p>We build local-first energy and water infrastructure that keeps working when the grid, the internet or the municipality doesn't. From one home to one community.</p>
+    </div>
+    <div class="hero-frame"></div>
+    <a class="hero-down" href="#about" aria-label="Scroll to About">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- A. WHAT SOLUON IS ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>What Soluon is about</h2></div>
+    <div class="about-grid">
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="6"/><path d="M24 4v4M24 40v4M4 24h4M40 24h4"/></svg>
+        <h3>Who Soluon is</h3>
+        <p>Soluon is a South African infrastructure-technology company founded in 2024. We are engineers building the hardware and software that give households, clinics, schools and farms dependable power and water.</p>
+      </div>
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 36l10-12 8 8 10-16 8 10"/><path d="M6 42h36"/></svg>
+        <h3>The problem we solve</h3>
+        <p>Load shedding, unreliable water and patchy connectivity are everyday engineering conditions here. Most "smart" technology quietly assumes a stable grid, fast internet, a smartphone and the cloud. We don't.</p>
+      </div>
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6c8 8 12 14 12 20a12 12 0 0 1-24 0c0-6 4-12 12-20z"/><path d="M18 28a6 6 0 0 0 6 6"/></svg>
+        <h3>Our broader vision</h3>
+        <p>A distributed, sovereign and circular infrastructure layer made of resilient "nodes" that stay useful across changing technologies, ownership cycles and generations, scaling from one home to one community.</p>
+      </div>
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40V20l18-12 18 12v20z"/><path d="M19 40V28h10v12"/></svg>
+        <h3>What we've seen</h3>
+        <p>"I check my borehole by walking 2&nbsp;km. I buy diesel because I don't know my solar status. I lose a crop because I didn't know the pump failed." That is the daily reality that led the team to build Soluon.</p>
+      </div>
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M16 25l6 6 11-13"/></svg>
+        <h3>What makes us different</h3>
+        <p>One platform, not four gadgets. It works offline, needs no smartphone, keeps your data on your own device, and is built to be repaired and reused rather than thrown away.</p>
+      </div>
+      <div class="about-item reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="16" r="6"/><circle cx="34" cy="16" r="6"/><circle cx="24" cy="36" r="6"/><path d="M19 19l3 12M29 19l-3 12M20 16h8"/></svg>
+        <h3>Built with communities</h3>
+        <p>We reach people through trusted local networks (spaza shops, co-ops, churches and clinics) rather than building new ones. If a shop already sells airtime, it can sell a NODE.</p>
+      </div>
+    </div>
+
+    <div class="about-feature">
+      <figure class="reveal"><img src="assets/photos/infrastructure.jpg" alt="A borehole pump station and power poles standing in a field at dusk" loading="lazy"></figure>
+      <div class="reveal">
+        <span class="eyebrow">One platform</span>
+        <h3 style="margin-top:8px">From one home to one community.</h3>
+        <p>Everything Soluon builds runs on <b>NODE</b>, a modular platform that scales from a single household to a clinic, a school or a whole village. The same hardware serves all three; only the firmware and peripherals change.</p>
+        <div class="stats">
+          <div class="stat"><b>2024</b><span>FOUNDED</span></div>
+          <div class="stat"><b>3</b><span>PRODUCTS IN PRODUCTION</span></div>
+          <div class="stat"><b>0</b><span>CLOUD DEPENDENCY</span></div>
+        </div>
+        <a class="btn" href="#approach">Our approach <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h16M12 1l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B. MISSION -->
+<div class="mission" id="mission">
+  <div class="wrap">
+    <span class="eyebrow">Our mission</span>
+    <blockquote class="reveal">To give every home and community infrastructure that keeps working, with or without a grid, a smartphone or the internet.</blockquote>
+    <p>Energy. Water. Resilient by design, owned by the people who use it, and built to be looked after for generations.</p>
+  </div>
+</div>
+
+<!-- C. THE PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>The problem: infrastructure that fails the people who need it most</h2></div>
+    <div class="problem-top">
+      <figure class="duo reveal">
+        <div><img src="assets/photos/power-cut.jpg" alt="A father and two children eating by candlelight during a power cut" loading="lazy" style="object-position:62% 50%"><figcaption>Power cut</figcaption></div>
+        <div><img src="assets/photos/no-water.jpg" alt="Cupped hands held under a dry, rusted outdoor tap" loading="lazy" style="object-position:38% 50%"><figcaption>No water</figcaption></div>
+      </figure>
+      <div class="reveal">
+        <h3>What is broken?</h3>
+        <p>Power cuts, failing water supply and limited connectivity are treated as exceptions. For millions of South Africans, from city apartments to deep rural villages, they are the normal operating conditions.</p>
+        <p>Households guess when a tank is low, buy diesel without knowing their solar status, and only discover a pump failure when the crop is already lost. Meanwhile each device, from each brand, works alone and usually needs a phone and the cloud.</p>
+      </div>
+    </div>
+
+    <div class="facts">
+      <div class="fact reveal"><b>332+</b><p>days of load shedding in 2023, the worst year on record.<sup>1</sup></p></div>
+      <div class="fact reveal"><b>35.9%</b><p>of households had load shedding or a power interruption in the week before they were surveyed.<sup>2</sup></p></div>
+      <div class="fact reveal"><b>46.4%</b><p>of households have piped water inside the dwelling. 87.7% have piped water on-site or off-site.<sup>2</sup></p></div>
+      <div class="fact reveal"><b>17.4%</b><p>of households have a fixed home internet line, so "app-first" and cloud-first products leave many people out.<sup>2</sup></p></div>
+    </div>
+    <p class="src"><sup>1</sup> <a href="https://iol.co.za/news/south-africa/2023-12-11-the-year-we-were-plunged-into-darkness-a-record-332-days-of-load-shedding-in-2023-and-counting/" target="_blank" rel="noopener">IOL, Dec 2023</a> (figure reported as of 11 Dec 2023). <sup>2</sup> <a href="https://www.statssa.gov.za/publications/P0318/MEDIA%20RELEASE%20-%20%20GHS%202024.pdf" target="_blank" rel="noopener">Stats SA, General Household Survey 2024</a>.</p>
+
+    <div class="who-affected reveal">
+      <h3>Who is affected</h3>
+      <div class="chips"><span>Urban households</span><span>Rural families</span><span>Farmers &amp; co-ops</span><span>Clinics</span><span>Schools</span><span>Spaza shops</span><span>Municipalities</span></div>
+    </div>
+
+    <div class="insuff">
+      <div class="reveal"><h4>Smart-home tech is fragile</h4><p>Cloud-dependent, locked ecosystems that need a smartphone, and stop working when the internet does.</p></div>
+      <div class="reveal"><h4>Point solutions don't talk</h4><p>Energy-only, water-only or lights-and-phone-charging systems that never integrate into one picture.</p></div>
+      <div class="reveal"><h4>Nothing is built for the edge</h4><p>Dust, heat, intermittent power and feature phones are rarely design inputs, so rural users are an afterthought.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- D. APPROACH -->
+<section class="approach" id="approach">
+  <div class="wrap">
+    <div class="approach-grid">
+      <div class="reveal">
+        <span class="eyebrow">How Soluon works</span>
+        <h2>Calm, local and built to last.</h2>
+        <ol class="steps">
+          <li><span class="num">01</span><div><h4>Local-first</h4><p>Processing, storage and automation happen on the NODE in your home or community. If the internet disappears, the system still works. The cloud is optional, never required.</p></div></li>
+          <li><span class="num">02</span><div><h4>You own your data</h4><p>Household and community data stays local and sovereign. We don't monetise data, and there is no "phoning home".</p></div></li>
+          <li><span class="num">03</span><div><h4>Community-owned</h4><p>Shared systems can be run by elected community trustees, supported by trained local dealers, with payment models that fit the way people earn, including seasonal payment holidays.</p></div></li>
+          <li><span class="num">04</span><div><h4>Works within real constraints</h4><p>No smartphone needed: control and monitor by SMS, USSD or voice menu on any phone. Built to survive dust, heat and intermittent power.</p></div></li>
+        </ol>
+      </div>
+      <figure class="reveal"><img src="assets/photos/approach.jpg" alt="Diagram of a NODE &quot;local brain&quot; at the centre, linked to energy, water, SMS, USSD and voice, and community, with the cloud crossed out and labelled no cloud needed" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- E. WHAT WE BUILD -->
+<section id="build">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>What we build</h2></div>
+    <p class="lead reveal" style="margin:-20px 0 40px">NODE is the platform. These are the production-ready systems at its core, each one repairable, offline-capable and designed to disappear into the environment until needed.</p>
+    <div class="products">
+      <article class="product reveal">
+        <img src="assets/photos/node-core.jpg" alt="A circuit board being assembled by a robotic arm on a production line" loading="lazy">
+        <div><span class="badge">Production-ready</span><h3>NODE Core</h3><p>The universal infrastructure computer every Soluon deployment has. Local processing, storage, automation, dashboard, voice menu and on-device intelligence.</p></div>
+      </article>
+      <article class="product reveal">
+        <img src="assets/photos/power-plug.jpg" alt="A person pressing a small white smart plug fitted in a wall socket while holding a phone" loading="lazy" style="object-position:70% 50%">
+        <div><span class="badge">Production-ready</span><h3>NODE Power Plug</h3><p>See what every appliance uses. Monitors voltage, current, power and energy; switches loads with a relay; and protects against overcurrent, overvoltage and overpower.</p></div>
+      </article>
+      <article class="product reveal">
+        <img src="assets/photos/water-monitor.jpg" alt="A wall-mounted water monitor with a display, fitted to copper pipes beside a running tap" loading="lazy" style="object-position:62% 50%">
+        <div><span class="badge">Production-ready</span><h3>NODE Water Sense</h3><p>Know your water before it's gone. Measures flow, detects leaks, controls valves and applies safety rules locally, even with no connection.</p></div>
+      </article>
+    </div>
+    <div class="app-band reveal">
+      <img class="app-img" src="assets/photos/app-phone.jpg" alt="A smartphone lying on a wooden table showing a dark screen of code" loading="lazy">
+      <div><h3>SoluonApp</h3><p>Your NODE, on your screen. See energy and water at a glance and take control from a dashboard, and for everyone without a smartphone, the same information is available by SMS, USSD or voice.</p></div>
+      <a class="btn" href="#contact">Ask about the app <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h16M12 1l4 4-4 4"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- F. WHO WE SERVE -->
+<section class="serve" id="serve">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>Who we serve &amp; who we work with</h2></div>
+    <div class="serve-grid">
+      <div class="serve-card reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20L24 8l18 12M10 20v16M20 20v16M28 20v16M38 20v16M6 40h36"/></svg>
+        <h3>Government</h3><p>Municipalities and departments procuring resilient infrastructure for rural development programmes, clinics and schools.</p>
+      </div>
+      <div class="serve-card reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="18" r="6"/><circle cx="34" cy="18" r="6"/><path d="M4 38c0-7 5-11 12-11s12 4 12 11M26 29c2-1 5-2 8-2 6 0 10 4 10 11"/></svg>
+        <h3>Communities</h3><p>Households, villages, spaza shops and congregations, with shared systems run by trusted community trustees.</p>
+      </div>
+      <div class="serve-card reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="32" height="26" rx="2"/><path d="M18 14V9h12v5M8 26h32"/></svg>
+        <h3>Organisations</h3><p>Agricultural co-ops, NGOs, development-finance partners, faith-based organisations, clinics and schools.</p>
+      </div>
+      <div class="serve-card reveal">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 8a10 10 0 0 0-9 14L8 35l5 5 13-13a10 10 0 0 0 14-9l-6 6-5-1-1-5z"/></svg>
+        <h3>Skilled workers</h3><p>Rural dealers, field agents and technicians who install, repair and refurbish NODEs, and earn commission and refurbishment credit doing it.</p>
+      </div>
+    </div>
+    <div class="dealer reveal">
+      <img src="assets/photos/shopkeeper.jpg" alt="A smiling shopkeeper in a blue shirt standing in front of shelves of goods in a small shop" loading="lazy">
+      <div>
+        <span class="eyebrow">For shop owners and local agents</span>
+        <h3>Your shop can be the last mile.</h3>
+        <p>If a spaza shop already sells airtime and batteries, it can sell and support NODE. Dealers handle first-line troubleshooting, basic repairs and onboarding, and earn commission on subscriptions plus credit for refurbished units they return.</p>
+        <p>No internet is needed to onboard a new customer. A dealer with a feature phone can activate a NODE through USSD.</p>
+        <a class="btn" href="#contact">Become a dealer <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h16M12 1l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+    <div class="serve-photos">
+      <figure class="reveal"><img src="assets/photos/clinic.jpg" alt="A community clinic with a red cross sign beside a gated yard, with two people standing at the entrance" loading="lazy"><figcaption>Clinics, schools and shops: community sites that need power and water to keep running.</figcaption></figure>
+      <figure class="reveal"><img src="assets/photos/village.jpg" alt="Round thatched houses painted turquoise on a green hillside at sunset" loading="lazy"><figcaption>Homes and villages beyond the grid, where resilience matters most.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- G. PRINCIPLES -->
+<section id="principles">
+  <div class="wrap">
+    <div class="princ-head">
+      <div class="sec-title reveal"><h2>Our principles</h2></div>
+      <div class="arrows"><button id="prev" aria-label="Previous principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button id="next" aria-label="Next principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="carousel" id="carousel" tabindex="0" aria-label="Soluon principles">
+      <div class="pcard"><span class="q">“</span><h3>Community ownership</h3><p>Shared systems are governed by the people who use them, through trustees, local dealers and cooperative models that keep value in the community.</p><small>PRINCIPLE 01</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Data sovereignty</h3><p>Your data lives on your device. No cloud dependency, no data monetisation, no hidden phone-home.</p><small>PRINCIPLE 02</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Local-first technology</h3><p>If the internet disappears, the system still works. Processing and automation happen where the infrastructure is.</p><small>PRINCIPLE 03</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Accessibility</h3><p>Works on a feature phone, with a text message, without literacy in English. A NODE that requires a smartphone cannot be certified.</p><small>PRINCIPLE 04</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Resilience</h3><p>Designed for the edge case: instability, absent grids, dust, heat and intermittent power. Life-critical functions like water never lock.</p><small>PRINCIPLE 05</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Inclusive participation</h3><p>Urban and rural, formal and informal, connected and offline. Payment models flex with the seasons, and onboarding needs no internet.</p><small>PRINCIPLE 06</small></div>
+      <div class="pcard"><span class="q">“</span><h3>Works within real-world constraints</h3><p>Circular by design, repairable by anyone trained, and stewarded for generations, not disposable, not locked in, not hype.</p><small>PRINCIPLE 07</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- H. TEAM -->
+<section class="team" id="team">
+  <div class="wrap">
+    <div class="sec-title reveal"><h2>The people building Soluon</h2></div>
+    <div class="team-grid">
+      <div class="member reveal"><img src="assets/team/sipho.jpg" alt="Portrait of Sipho Jnr Shaun Matakane" loading="lazy"><h3>Sipho Jnr Shaun Matakane</h3><div class="role">Founder &amp; CEO</div><p>Leads Soluon's strategy and engineering vision, from hardware and firmware to the NODE Core platform.</p></div>
+      <div class="member reveal"><img src="assets/team/lindiwe.jpg" alt="Portrait of Lindiwe Songelwa" loading="lazy"><h3>Lindiwe Songelwa</h3><div class="role">Co-Founder &amp; Head of ML</div><p>Works where data engineering, machine learning and civic accountability meet. Leads technical architecture and predictive infrastructure, turning complex data into clear stories that unite stakeholders.</p></div>
+      <div class="member reveal"><img src="assets/team/phathisa.jpg" alt="Portrait of Phathisa Ndaliso" loading="lazy"><h3>Phathisa Ndaliso</h3><div class="role">Full Stack Software Developer</div><p>Builds practical software across backend and frontend: Python, Flask, REST APIs, databases and responsive web apps, turning ideas into useful products.</p></div>
+      <div class="member reveal"><img src="assets/team/thando.jpg" alt="Portrait of Thando Milicent Mngomezulu" loading="lazy"><h3>Thando Milicent Mngomezulu</h3><div class="role">Machine Learning &amp; AI Engineer</div><p>Certified ML &amp; AI engineer building and deploying end-to-end data-driven systems: predictive neural networks, edge anomaly detection and computer vision (PyTorch, TensorFlow, Scikit-Learn).</p></div>
+      <div class="member reveal"><img src="assets/team/emmanuel.jpg" alt="Portrait of Emmanuel Phosholi" loading="lazy"><h3>Emmanuel Phosholi</h3><div class="role">Full-Stack Developer</div><p>Full-stack developer with a strong passion for ICT and technology.</p></div>
+      <div class="member reveal"><img src="assets/team/owen.jpg" alt="Portrait of Owen Jnr Makene" loading="lazy"><h3>Owen Jnr Makene</h3><div class="role">Junior Full-Stack &amp; QA Developer</div><p>Builds, tests and improves applications across frontend and backend, helping keep them reliable, secure and user-friendly.</p></div>
+      <div class="member reveal"><img src="assets/team/snalo.jpg" alt="Portrait of Snalo Noni" loading="lazy"><h3>Snalo Noni</h3><div class="role">Embedded Systems &amp; Firmware Developer</div><p>Works where application development meets physical hardware: microcontroller programming, firmware architecture and hardware-software integration.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- I. CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Work with us</span>
+    <h2 style="margin-top:10px">Let's build something resilient together.</h2>
+    <p class="lead">Pilot partner, government programme, funder, dealer or collaborator? Tell us what you have in mind, no internet required to learn about us, and no smartphone to buy one.</p>
+    <div class="contact-grid">
+      <div class="channels">
+        <div class="channel"><small>General &amp; partnerships</small><a href="mailto:info@soluon.com">info@soluon.com</a></div>
+        <div class="channel"><small>Rural dealer enquiries</small><a href="mailto:rural@soluon.com">rural@soluon.com</a></div>
+        <div class="channel"><small>Offline dealer kit request</small><a href="mailto:dealers@soluon.com">dealers@soluon.com</a></div>
+        <div class="channel"><small>Try the USSD demo from any phone</small><strong>Dial *130*NODE#</strong></div>
+        <div class="channel"><small>Follow our journey</small><a href="https://www.linkedin.com/company/soluon" target="_blank" rel="noopener">Soluon on LinkedIn ↗</a></div>
+      </div>
+      <form id="form" novalidate>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <div class="row2">
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        </div>
+        <label>Organisation <input name="org" autocomplete="organization"></label>
+        <label>I'm enquiring about
+          <select name="topic">
+            <option>Partnership / pilot</option><option>Government or procurement</option><option>Becoming a rural dealer</option><option>Funding or research collaboration</option><option>Careers &amp; internships</option><option>Something else</option>
+          </select>
+        </label>
+        <label>Message<textarea name="msg" required></textarea></label>
+        <button class="btn solid" type="submit">Send message <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h16M12 1l4 4-4 4"/></svg></button>
+        <p class="note" id="note">Your message goes straight to the Soluon team at info@soluon.com.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><div class="logo"><i></i>SOLUON</div><p>Infrastructure for resilient living. From one home to one community. From one generation to the next.</p></div>
+      <div><h4>Explore</h4><ul><li><a href="#about">About</a></li><li><a href="#problem">The problem</a></li><li><a href="#approach">Approach</a></li><li><a href="#build">What we build</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#serve">Who we serve</a></li><li><a href="#principles">Principles</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Get in touch</h4><ul><li><a href="mailto:info@soluon.com">info@soluon.com</a></li><li><a href="mailto:rural@soluon.com">rural@soluon.com</a></li><li>South Africa</li></ul></div>
+    </div>
+    <div class="copy"><span>© 2024 SOLUON (Pty) Ltd. All rights reserved.</span><span>Build for the long now.</span></div>
+  </div>
+</footer>
+</div>
+
+<script>
+const hdr=document.querySelector('header');const onScroll=()=>hdr.classList.toggle('stuck',window.scrollY>10);addEventListener('scroll',onScroll,{passive:true});onScroll();
+const nav=document.getElementById('nav'),mb=document.getElementById('menu');
+mb.addEventListener('click',()=>{const o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+nav.addEventListener('click',e=>{if(e.target.tagName==='A'){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+const c=document.getElementById('carousel');
+const step=()=>c.querySelector('.pcard').offsetWidth+24;
+document.getElementById('next').onclick=()=>c.scrollBy({left:step(),behavior:'smooth'});
+document.getElementById('prev').onclick=()=>c.scrollBy({left:-step(),behavior:'smooth'});
+const FORM_ENDPOINT='https://formsubmit.co/ajax/info@soluon.com';
+const form=document.getElementById('form'),note=document.getElementById('note'),sendBtn=form.querySelector('button[type=submit]');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!form.checkValidity()){form.reportValidity();return}
+  const d=new FormData(form);
+  if(d.get('_honey'))return; // spam trap
+  const mailto='mailto:info@soluon.com?subject='+encodeURIComponent('['+d.get('topic')+'] Enquiry from '+d.get('name'))+'&body='+encodeURIComponent(d.get('msg')+'\n\nFrom: '+d.get('name')+(d.get('org')?', '+d.get('org'):'')+'\n'+d.get('email'));
+  sendBtn.disabled=true;note.style.color='';note.textContent='Sending…';
+  try{
+    const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+      name:d.get('name'),email:d.get('email'),organisation:d.get('org')||'n/a',topic:d.get('topic'),message:d.get('msg'),
+      _subject:'Soluon website enquiry: '+d.get('topic'),_replyto:d.get('email'),_template:'table',_captcha:'false'})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||j.success==='false')throw new Error(j.message||r.status);
+    form.reset();note.style.color='#2f7a4d';note.textContent='Thank you, your message has been sent. We will reply by email.';
+  }catch(err){
+    note.style.color='#b0443a';note.innerHTML='Sorry, that did not send. Please <a href="'+mailto+'" style="text-decoration:underline">email us directly</a> or write to info@soluon.com.';
+  }finally{sendBtn.disabled=false}
+});
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12}):null;
+document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
+</script>
+</body>
+</html>
